@@ -1,0 +1,13 @@
+2024-10-01T11:32:38.066Z
+Error: Unsupported database type: unknown
+    at Object.fetchSchemaJson (/usr/lib/node_modules/@dbml/cli/node_modules/@dbml/connector/dist/connectors/connector.js:22:19)
+    at connectionHandler (/usr/lib/node_modules/@dbml/cli/lib/cli/connector.js:24:51)
+    at Object.db2dbml (/usr/lib/node_modules/@dbml/cli/lib/cli/index.js:62:26)
+    at Object.<anonymous> (/usr/lib/node_modules/@dbml/cli/bin/db2dbml.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1691:10)
+    at Module.load (node:internal/modules/cjs/loader:1317:32)
+    at Module._load (node:internal/modules/cjs/loader:1127:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+
