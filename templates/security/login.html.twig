@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'empty.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
@@ -8,21 +8,76 @@
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        {% if app.user %}
+         {% if app.user %}
             <div class="mb-3">
                 You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
 
-        <input type="hidden" name="_csrf_token"
+        <div class="overlay">
+        <!-- LOGN IN FORM by Omar Dsoky -->
+        <form>
+            <!--   con = Container  for items in the form-->
+        <div class="con">
+            <!--     Start  header Content  -->
+        <header class="head-form">
+            <h2>Log In</h2>
+            <!--     A welcome message or an explanation of the login form -->
+            <p>login here using your username and password</p>
+    </header>
+    <!--     End  header Content  -->
+    <br>
+    <div class="field-set">
+     
+      <!--   user name -->
+         <span class="input-item">
+           <i class="fa fa-user-circle"></i>
+         </span>
+        <!--   user name Input-->
+         <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-input" placeholder ="@Username" autocomplete="username"  required autofocus>
+     
+      <br>
+     
+           <!--   Password -->
+     
+      <span class="input-item">
+        <i class="fa fa-key"></i>
+       </span>
+      <!--   Password Input-->
+      <input type="password" name="_password" id="password" class="form-input" placeholder ="@Password" autocomplete="current-password" required>
+
+      <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
         >
+     
+      <br>
+<!--        buttons -->
+<!--      button LogIn -->
+<button class="btn btn-lg btn-primary" type="submit"> Log In </button>
+   </div>
+  
+
+   <div class="other">
+
+      <button class="btn submits frgt-pass">Forgot Password</button>
+
+      <button class="btn submits sign-up">Sign Up 
+
+      <i class="fa fa-user-plus" aria-hidden="true"></i>
+      </button>
+
+   </div>
+     
+
+  </div>
+  
+
+  
+</form>
+</div>
+
+        
 
         {#
             Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -33,9 +88,6 @@
                 <label for="_remember_me">Remember me</label>
             </div>
         #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
+        
     </form>
 {% endblock %}
