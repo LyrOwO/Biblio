@@ -19,6 +19,8 @@
     </head>
     <body>
         {% include 'menu/header.html.twig' %}
+        {% include 'bibli/piece.html.twig' with {'title': 'Featured Books'} %}
+        {% include 'bibli/piece.html.twig' with {'title': 'Popular Books'} %}
         {% block body %}{% endblock %}
         {% include 'menu/footer.html.twig' %}
     </body>

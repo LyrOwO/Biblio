@@ -30,8 +30,6 @@ class AuthorCrudController extends AbstractCrudController
     }
 
     
-
-
     public function configureFields(string $pageName): iterable
     {
             yield TextField::new('name');
