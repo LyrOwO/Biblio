@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Author;
+use App\Entity\Book;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -25,13 +26,24 @@ class AuthorCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular('books Author')
+            ->setEntityLabelInPlural('books Authors')
             ->setSearchFields(['name', 'nickname', 'birthday'])
         ;
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(EntityFilter::new('books'))
+        ;
+    }
+
+
     
     public function configureFields(string $pageName): iterable
     {
+            yield AssociationField::new('books');
             yield TextField::new('name');
             yield TextField::new('nickname');
             yield DateField::new('birthday');

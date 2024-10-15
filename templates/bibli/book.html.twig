@@ -4,9 +4,10 @@
             <img src="./bibliotheme/assets/images/tab-item4.jpg" alt="Books" class="product-item">
         </figure>
         <figcaption>
-            <h3>Just felt from outside</h3>
-            <span>Nicole Wilson</span>
-            <div class="item-price">$ 40.00</div>
+        {% for book in books %}
+            <h3>{{ book.title }}</h3>
+            <span>{{ book.author.name |default ('Na') }} {{ book.author.nickname |default ('') }}</span>
+        {% endfor %}
         </figcaption>
     </div>
 </div>

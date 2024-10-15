@@ -36,11 +36,21 @@ class Book
     #[ORM\OneToMany(targetEntity: BooksUser::class, mappedBy: 'book')]
     private Collection $booksUsers;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageLink_medium = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageLink_thumbnail = null;
+
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getTitle();
+    }
 
     public function getId(): ?int
     {
@@ -133,6 +143,30 @@ class Book
                 $booksUser->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageLinkMedium(): ?string
+    {
+        return $this->imageLink_medium;
+    }
+
+    public function setImageLinkMedium(?string $imageLink_medium): static
+    {
+        $this->imageLink_medium = $imageLink_medium;
+
+        return $this;
+    }
+
+    public function getImageLinkThumbnail(): ?string
+    {
+        return $this->imageLink_thumbnail;
+    }
+
+    public function setImageLinkThumbnail(?string $imageLink_thumbnail): static
+    {
+        $this->imageLink_thumbnail = $imageLink_thumbnail;
 
         return $this;
     }

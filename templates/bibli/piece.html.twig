@@ -11,10 +11,9 @@
 
 					<div class="product-list aos-init aos-animate" data-aos="fade-up">
 						<div class="row">
-                            {% include 'bibli/book.html.twig' %}
-                            {% include 'bibli/book.html.twig' %}
-                            {% include 'bibli/book.html.twig' %}
-                            {% include 'bibli/book.html.twig' %}
+							{% for book in books %}
+								{% include 'bibli/book.html.twig' %}
+							{% endfor %}
 						</div>
 					</div>
 				</div>
