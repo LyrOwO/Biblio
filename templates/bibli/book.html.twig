@@ -1,13 +1,11 @@
 <div class="col-md-3">
     <div class="product-item">
         <figure class="product-style">
-            <img src="./bibliotheme/assets/images/tab-item4.jpg" alt="Books" class="product-item">
+            <img src={{ book.imageLink_medium }},alt="Books" class="product-item">
         </figure>
         <figcaption>
-        {% for book in books %}
             <h3>{{ book.title }}</h3>
             <span>{{ book.author.name |default ('Na') }} {{ book.author.nickname |default ('') }}</span>
-        {% endfor %}
         </figcaption>
     </div>
 </div>
