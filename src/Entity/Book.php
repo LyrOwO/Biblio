@@ -38,10 +38,11 @@ class Book
     private Collection $booksUsers;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $imageLink_medium = null;
+    private ?string $ImageLinkMedium = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $imageLink_thumbnail = null;
+    private ?string $ImageLinkThumbnail = null;
+
 
     public function __construct()
     {
@@ -150,26 +151,27 @@ class Book
 
     public function getImageLinkMedium(): ?string
     {
-        return $this->imageLink_medium;
+        return $this->ImageLinkMedium;
     }
 
-    public function setImageLinkMedium(?string $imageLink_medium): static
+    public function setImageLinkMedium(?string $ImageLinkMedium): static
     {
-        $this->imageLink_medium = $imageLink_medium;
+        $this->ImageLinkMedium = $ImageLinkMedium;
 
         return $this;
     }
 
     public function getImageLinkThumbnail(): ?string
     {
-        return $this->imageLink_thumbnail;
+        return $this->ImageLinkThumbnail;
     }
 
-    public function setImageLinkThumbnail(?string $imageLink_thumbnail): static
+    public function setImageLinkThumbnail(?string $ImageLinkThumbnail): static
     {
-        $this->imageLink_thumbnail = $imageLink_thumbnail;
+        $this->ImageLinkThumbnail = $ImageLinkThumbnail;
 
         return $this;
     }
+
 
 }
