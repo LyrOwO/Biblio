@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Nabuk{% endblock %}
 
 {% block body %}
-
+    {% include 'bibli/piece.html.twig' with {'title': 'Featured Books'} %}
+    {% include 'bibli/piece.html.twig' with {'title': 'Popular Books'} %}
 {% endblock %}
