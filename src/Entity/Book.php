@@ -22,14 +22,8 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, unique: true)]
-    private ?string $ISBN = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment = null;
-
-    #[ORM\ManyToOne(inversedBy: 'books')]
-    private ?Author $author = null;
 
     /**
      * @var Collection<int, BooksUser>
@@ -43,10 +37,29 @@ class Book
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $ImageLinkThumbnail = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $subtitle = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $IndustryIdentifiersIdentifier = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $pageCount = null;
+
+    /**
+     * @var Collection<int, Author>
+     */
+    #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'books')]
+    private Collection $authors;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
+        $this->author = new ArrayCollection();
+        $this->authors = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -71,18 +84,6 @@ class Book
         return $this;
     }
 
-    public function getISBN(): ?string
-    {
-        return $this->ISBN;
-    }
-
-    public function setISBN(string $ISBN): static
-    {
-        $this->ISBN = $ISBN;
-
-        return $this;
-    }
-
     public function getComment(): ?string
     {
         return $this->comment;
@@ -95,17 +96,6 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?Author
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?Author $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 
     public function getPret(): ?Pret
     {
@@ -172,6 +162,81 @@ class Book
 
         return $this;
     }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(?string $subtitle): static
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+
+
+    public function getIndustryIdentifiersIdentifier(): ?string
+    {
+        return $this->IndustryIdentifiersIdentifier;
+    }
+
+    public function setIndustryIdentifiersIdentifier(?string $IndustryIdentifiersIdentifier): static
+    {
+        $this->IndustryIdentifiersIdentifier = $IndustryIdentifiersIdentifier;
+
+        return $this;
+    }
+
+    public function getPageCount(): ?int
+    {
+        return $this->pageCount;
+    }
+
+    public function setPageCount(?int $pageCount): static
+    {
+        $this->pageCount = $pageCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Author>
+     */
+    public function getAuthors(): Collection
+    {
+        return $this->authors;
+    }
+
+    public function addAuthor(Author $author): static
+    {
+        if (!$this->authors->contains($author)) {
+            $this->authors->add($author);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(Author $author): static
+    {
+        $this->authors->removeElement($author);
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
 
 
 }
