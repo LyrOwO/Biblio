@@ -237,6 +237,28 @@ class Book
         return $this;
     }
 
+    public function getDisplaySubtitle(): string {
+        if(!empty($this->getSubtitle())) 
+            return $this->getSubtitle();
 
+        if(!empty($this->getTitle()))
+            $titleWords = explode(' ', $this->getTitle());
+            $excerpt = implode(' ', array_slice($titleWords, 0, 5));
+            return $excerpt;
+        
+        return '';
+        
+    }
+
+    public function getDisplayImage(): string {
+        if(!empty($this->getImageLinkMedium()))
+            return $this->getImageLinkMedium();
+
+        if(!empty($this->getImageLinkThumbnail()))
+            return $this;
+
+        return 
+    }
+   
 
 }

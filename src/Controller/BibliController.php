@@ -33,11 +33,19 @@ class BibliController extends AbstractController
             'https://www.googleapis.com/books/v1/volumes?q=api'
         );
         $results = $response->toArray();
-        if(!empty($results['items'])){
-            foreach($results['items'] as $item) {
-                var_dump($item['volumeInfo']['industryIdentifiers']);
-                //mettre foreachpour parcourir les valeurs, voir le quel guarder
-                exit();
+        if (!empty($results['items'])) {
+            foreach ($results['items'] as $item) {
+                // Vérifier si 'industryIdentifiers' existe dans 'volumeInfo'
+                //if (!empty($item['volumeInfo']['industryIdentifiers'])) {
+                    //foreach ($item['volumeInfo']['industryIdentifiers'] as $identifier) {
+                        //if (isset($identifier['identifier'])) {
+                            //echo $identifier['identifier'] . "\n";
+                        //}
+                    //}
+                //} else {
+                    //echo "Pas d'identifiants pour cet élément.\n";
+                //}
+            
                 $book = new Book();
                 $book->setTitle($item['volumeInfo']['title']);
                 if(!empty($item['volumeInfo']['imageLinks']['medium']))
@@ -46,24 +54,58 @@ class BibliController extends AbstractController
                 if(!empty($item['volumeInfo']['imageLinks']['thumbnail']))
                     $book->setImageLinkThumbnail($item['volumeInfo']['imageLinks']['thumbnail']);
 
-                //$book->setSubtitle($item['volumeInfo']['subtitle']);
+                
+                $book->getDisplaySubtitle($item);
+                
+
                 $book->setDescription($item['volumeInfo']['description']);
-                //$book->setIndustryIdentifiersIdentifier($item['volumeInfo']['industryIdentifiers']['identifier']);
-                //
+
+                if (!empty($item['volumeInfo']['industryIdentifiers'])) {
+                    $identifierToStore = null;
+                
+                    // Première boucle : chercher ISBN_13
+                    foreach ($item['volumeInfo']['industryIdentifiers'] as $identifier) {
+                        if ($identifier['type'] === 'ISBN_13') {
+                            // Si ISBN_13 est trouvé, on le garde
+                            $identifierToStore = $identifier['identifier'];
+                            $book->setIndustryIdentifiersIdentifier($identifierToStore);
+                            break; // Sortir de la boucle dès qu'on a trouvé ISBN_13
+                        }
+                    }
+                
+                    // Si aucun ISBN_13 trouvé, chercher ISBN_10 avec un elseif
+                    if ($identifierToStore === null) {
+                        foreach ($item['volumeInfo']['industryIdentifiers'] as $identifier) {
+                            if ($identifier['type'] === 'ISBN_10') {
+                                // Si ISBN_10 est trouvé, on le garde
+                                $identifierToStore = $identifier['identifier'];
+                                $book->setIndustryIdentifiersIdentifier($identifierToStore);
+                                break; // Sortir de la boucle dès qu'on a trouvé ISBN_10
+                            }
+                        }
+                    }
+                
+                    // Si aucun ISBN_13 ni ISBN_10 n'a été trouvé, prendre le premier identifiant disponible
+                    if ($identifierToStore === null) {
+                        $identifierToStore = $item['volumeInfo']['industryIdentifiers'][0]['identifier'];
+                        $book->setIndustryIdentifiersIdentifier($identifierToStore);
+                    }
+                }
+                
+
+                
                 $book->setPagecount($item['volumeInfo']['pageCount']);
                 //$book->set
                 $this->entityManager->persist($book);
                 $this->entityManager->flush();
-                
 
-
-                
-            }
+            }   
+            
         }
-        exit;
+        //exit;
         //foreach(
-            var_dump();
-            exit;
+            //var_dump();
+            //exit;
         $books = $BookRepository->findAll();
 
         return $this->render('bibli/index.html.twig', [
