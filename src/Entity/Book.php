@@ -257,7 +257,7 @@ class Book
         if(!empty($this->getImageLinkThumbnail()))
             return $this;
 
-        return 
+        return '.\bibliotheme\assets\images\item1.png';
     }
    
 
