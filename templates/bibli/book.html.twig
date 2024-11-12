@@ -1,7 +1,8 @@
 <div class="col-md-3">
     <div class="product-item">
         <figure class="product-style">
-            <img src={{ book.ImageLinkThumbnail }},alt="Books" class="product-item">
+            <img src="{{ book.DisplayImage }}" alt="Books"
+                style="width: 95%; height: 400px; object-fit: cover;">
         </figure>
         <figcaption>
             <h3>{{ book.title }}</h3>

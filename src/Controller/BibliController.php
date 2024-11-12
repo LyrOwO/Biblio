@@ -30,7 +30,7 @@ class BibliController extends AbstractController
 
         $response = $this->client->request(
             'GET',
-            'https://www.googleapis.com/books/v1/volumes?q=api'
+            'https://www.googleapis.com/books/v1/volumes?q=Berserk - Tome 38+inauthor:Kentaro Miura&maxResults=1&isbn=9782331036651'
         );
         $results = $response->toArray();
         if (!empty($results['items'])) {
@@ -48,6 +48,7 @@ class BibliController extends AbstractController
             
                 $book = new Book();
                 $book->setTitle($item['volumeInfo']['title']);
+
                 if(!empty($item['volumeInfo']['imageLinks']['medium']))
                     $book->setImageLinkMedium($item['volumeInfo']['imageLinks']['medium']);
 
@@ -55,7 +56,9 @@ class BibliController extends AbstractController
                     $book->setImageLinkThumbnail($item['volumeInfo']['imageLinks']['thumbnail']);
 
                 
-                $book->getDisplaySubtitle($item);
+                $book->getDisplaySubtitle($item['volumeInfo']);
+
+                $book->getDisplayImage($item);
                 
 
                 $book->setDescription($item['volumeInfo']['description']);
