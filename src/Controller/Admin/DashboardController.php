@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'app_bibli');
         yield MenuItem::linkToCrud('Author', 'fas fa-map-marker-alt', Author::class);
         yield MenuItem::linkToCrud('Books', 'fas fa-comments', Book::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-comments', User::class);
 
     }
 }
