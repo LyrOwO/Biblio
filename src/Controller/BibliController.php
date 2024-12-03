@@ -27,7 +27,7 @@ class BibliController extends AbstractController
     public function index(BookRepository $BookRepository, AuthorRepository $AuthorRepository): Response
     
     {
-
+        /*
         $response = $this->client->request(
             'GET',
             'https://www.googleapis.com/books/v1/volumes?q=Berserk+inauthor:Kentaro Miura'
@@ -103,8 +103,9 @@ class BibliController extends AbstractController
                 $this->entityManager->flush();
 
             }   
-            
+         
         }
+        */
         //exit;
         //foreach(
             //var_dump();
