@@ -30,7 +30,7 @@ class BibliController extends AbstractController
 
         $response = $this->client->request(
             'GET',
-            'https://www.googleapis.com/books/v1/volumes?q=Berserk - Tome 38+inauthor:Kentaro Miura&maxResults=1&isbn=9782331036651'
+            'https://www.googleapis.com/books/v1/volumes?q=Berserk+inauthor:Kentaro Miura'
         );
         $results = $response->toArray();
         if (!empty($results['items'])) {
