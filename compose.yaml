@@ -32,6 +32,13 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
 
+  selenium:
+          container_name: selenium
+          image: selenium/standalone-chromium
+          extra_hosts:
+              - 'host.docker.internal:host-gateway'
+          volumes:
+              - '/dev/shm:/dev/shm'
   phpmyadmin:
     image: phpmyadmin
     restart: always
@@ -50,11 +57,9 @@ services:
     image: mysql:latest
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-bibliobase}
-      # You should definitely change the password in production
-      MYSQL_RANDOM_ROOT_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-biblimdpadmin}
       MYSQL_USER: ${MYSQL_USER:-bibliadmin}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-biblimdpadmin}
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 5s
@@ -75,3 +80,4 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   mysql_data:
 ###< doctrine/doctrine-bundle ###
+
