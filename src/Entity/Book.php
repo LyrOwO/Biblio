@@ -55,10 +55,16 @@ class Book
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: true)] // Changez nullable à true
+    private ?Author $author = null;
+
+    #[ORM\Column(length: 13, unique: true, nullable: true)]
+    private ?string $ISBN = null;
+
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
-        $this->author = new ArrayCollection();
         $this->authors = new ArrayCollection();
     }
 
@@ -258,6 +264,38 @@ class Book
             return $this->getImageLinkThumbnail();
 
         return 'bibliotheme\assets\images\item1.png';
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): static
+    {
+        if ($author === null) {
+            // Récupérez l'auteur par défaut (ID = 1)
+            $defaultAuthor = new Author();
+            $defaultAuthor->setId(4); // Assurez-vous que l'ID correspond à l'auteur par défaut
+            $defaultAuthor->setName('Auteur inconnu');
+            $this->author = $defaultAuthor;
+        } else {
+            $this->author = $author;
+        }
+
+        return $this;
+    }
+
+    public function getISBN(): ?string
+    {
+        return $this->ISBN;
+    }
+
+    public function setISBN(?string $ISBN): static
+    {
+        $this->ISBN = $ISBN;
+
+        return $this;
     }
    
 

@@ -46,5 +46,5 @@ class BookCrudController extends AbstractCrudController
         yield TextareaField::new('comment');
         yield TextField::new('ImageLinkMedium');
         yield TextField::new('ImageLinkThumbnail');
-     }
+    }
 }

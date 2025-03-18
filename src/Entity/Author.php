@@ -25,13 +25,13 @@ class Author
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nickname = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthday = null;
 
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'authors')]
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
     private Collection $books;
 
     public function __construct()
@@ -80,7 +80,7 @@ class Author
         return $this->birthday;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): static
+    public function setBirthday(?\DateTimeInterface $birthday): static
     {
         $this->birthday = $birthday;
 
