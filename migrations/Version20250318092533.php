@@ -21,13 +21,13 @@ final class Version20250318092533 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE book ADD isbn VARCHAR(13) DEFAULT NULL');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_CBE5A331CC1CF4E6 ON book (isbn)');
+        #$this->addSql('CREATE UNIQUE INDEX UNIQ_CBE5A331CC1CF4E6 ON book (isbn)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_CBE5A331CC1CF4E6 ON book');
+        #$this->addSql('DROP INDEX UNIQ_CBE5A331CC1CF4E6 ON book');
         $this->addSql('ALTER TABLE book DROP isbn');
     }
 }
