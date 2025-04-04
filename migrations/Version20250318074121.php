@@ -38,3 +38,4 @@ final class Version20250318074121 extends AbstractMigration
         $this->addSql('ALTER TABLE book DROP author_id');
     }
 }
+//marche

@@ -31,3 +31,4 @@ final class Version20250318082123 extends AbstractMigration
         $this->addSql('ALTER TABLE book CHANGE author_id author_id INT NOT NULL');
     }
 }
+//marche

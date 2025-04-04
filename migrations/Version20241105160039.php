@@ -29,3 +29,4 @@ final class Version20241105160039 extends AbstractMigration
         $this->addSql('ALTER TABLE book DROP description');
     }
 }
+//marche
