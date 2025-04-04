@@ -51,8 +51,6 @@ class Book
     /**
      * @var Collection<int, Author>
      */
-    #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'books')]
-    private Collection $authors;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
