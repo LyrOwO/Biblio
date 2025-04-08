@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-#[UniqueEntity('ISBN')]
+#[UniqueEntity('IndustryIdentifiersIdentifier')]
 #[ApiResource]
 class Book
 {
@@ -42,7 +42,7 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
     private ?string $IndustryIdentifiersIdentifier = null;
 
     #[ORM\Column(nullable: true)]
@@ -58,9 +58,6 @@ class Book
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: true)] // Changez nullable à true
     private ?Author $author = null;
-
-    #[ORM\Column(length: 13, unique: true, nullable: true)]
-    private ?string $ISBN = null;
 
     public function __construct()
     {
@@ -285,18 +282,4 @@ class Book
 
         return $this;
     }
-
-    public function getISBN(): ?string
-    {
-        return $this->ISBN;
-    }
-
-    public function setISBN(?string $ISBN): static
-    {
-        $this->ISBN = $ISBN;
-
-        return $this;
-    }
-   
-
 }

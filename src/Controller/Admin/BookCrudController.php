@@ -26,23 +26,20 @@ class BookCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('author Book')
             ->setEntityLabelInPlural('author Books')
-            ->setSearchFields(['title', 'ISBN', 'comment','ImageLinkMedium','ImageLinkThumbnail'])
-        ;
+            ->setSearchFields(['title', 'IndustryIdentifiersIdentifier', 'comment', 'ImageLinkMedium', 'ImageLinkThumbnail']);
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(EntityFilter::new('author'))
-        ;
+            ->add(EntityFilter::new('author'));
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         yield AssociationField::new('author');
         yield TextField::new('title');
-        yield TextField::new('ISBN');
+        yield TextField::new('IndustryIdentifiersIdentifier');
         yield TextareaField::new('comment');
         yield TextField::new('ImageLinkMedium');
         yield TextField::new('ImageLinkThumbnail');
