@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+
 class PretCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -23,6 +25,7 @@ class PretCrudController extends AbstractCrudController
             TextField::new('name'),
             DateTimeField::new('date_debut_pret'),
             DateTimeField::new('date_fin_pret'),
+            AssociationField::new('books') // Permet de sélectionner les livres associés au prêt
         ];
     }
     

@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Pret;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[UniqueEntity('IndustryIdentifiersIdentifier')]
@@ -59,6 +60,10 @@ class Book
     #[ORM\JoinColumn(nullable: true)] // Changez nullable à true
     private ?Author $author = null;
 
+    #[ORM\ManyToOne(targetEntity: Pret::class, inversedBy: 'books', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)] // La relation est optionnelle
+    private ?Pret $pret = null;
+
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
@@ -98,7 +103,6 @@ class Book
 
         return $this;
     }
-
 
     public function getPret(): ?Pret
     {

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Book;
 
 #[ORM\Entity(repositoryClass: PretRepository::class)]
 #[ApiResource]
@@ -33,9 +34,16 @@ class Pret
     #[ORM\OneToMany(targetEntity: BooksUser::class, mappedBy: 'pret')]
     private Collection $booksUsers;
 
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'pret')]
+    private Collection $books;
+
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +111,36 @@ class Pret
             // set the owning side to null (unless already changed)
             if ($booksUser->getPret() === $this) {
                 $booksUser->setPret(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    public function addBook(Book $book): static
+    {
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+            $book->setPret($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): static
+    {
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getPret() === $this) {
+                $book->setPret(null);
             }
         }
 
