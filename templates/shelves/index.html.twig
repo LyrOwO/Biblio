@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Yes{% endblock %}
+{% block title %}Etagères{% endblock %}
 
 {% block body %}
-    
+    <h1>Liste des étagères</h1>
+    <ul>
+        {% for shelve in shelves %}
+            <li>{{ shelve.name }} - Créée le {{ shelve.dateCreation|date('d/m/Y') }}</li>
+        {% else %}
+            <li>Aucune étagère trouvée.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

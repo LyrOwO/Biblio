@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prêts{% endblock %}
+
+{% block body %}
+    <h1>Liste des prêts</h1>
+    <a href="{{ path('app_prets_new') }}" class="btn btn-primary mb-3">Créer un prêt</a>
+    <ul>
+        {% for pret in prets %}
+            <li>
+                {{ pret.namePret }} - Début : {{ pret.dateDebutPret|date('d/m/Y') }}
+                {% if pret.dateFinPret %}
+                    - Fin : {{ pret.dateFinPret|date('d/m/Y') }}
+                {% else %}
+                    - En cours
+                {% endif %}
+            </li>
+        {% else %}
+            <li>Aucun prêt trouvé.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
