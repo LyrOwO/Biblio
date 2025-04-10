@@ -275,10 +275,11 @@ class Book
     public function setAuthor(?Author $author): static
     {
         if ($author === null) {
-            // Récupérez l'auteur par défaut (ID = 1)
-            $defaultAuthor = new Author();
-            $defaultAuthor->setId(4); // Assurez-vous que l'ID correspond à l'auteur par défaut
-            $defaultAuthor->setName('Auteur inconnu');
+            // Récupérez l'auteur par défaut (ID = 1 au lieu de 0)
+            $defaultAuthor = $this->entityManager->getRepository(Author::class)->find(1);
+            if ($defaultAuthor === null) {
+                throw new \Exception('Auteur par défaut introuvable.');
+            }
             $this->author = $defaultAuthor;
         } else {
             $this->author = $author;

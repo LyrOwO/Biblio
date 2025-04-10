@@ -6,7 +6,13 @@
         </figure>
         <figcaption>
             <h3>{{ book.title }}</h3>
-            <span>{{ book.author.name |default ('Na') }} {{ book.author.nickname |default ('') }}</span>
+            <span>
+                {% if book.author %}
+                    {{ book.author.name | default('Na') }} {{ book.author.nickname | default('') }}
+                {% else %}
+                    Auteur inconnu
+                {% endif %}
+            </span>
         </figcaption>
     </div>
 </div>
