@@ -3,6 +3,45 @@
 {% block title %}Nabuk{% endblock %}
 
 {% block body %}
-    {% include 'bibli/piece.html.twig' with {'title': 'Featured Books'} %}
-    {% include 'bibli/piece.html.twig' with {'title': 'Popular Books'} %}
+    <section id="featured-books" class="py-5 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header align-center">
+                        <div class="title">
+                            <span>Some quality items</span>
+                        </div>
+                        <h2 class="section-title">Featured Books</h2>
+                    </div>
+
+                    <div class="product-list">
+                        <div class="row">
+                            {% for book in books %}
+                                <div class="col-md-3">
+                                    <div class="product-item">
+                                        <figure class="product-style">
+                                            <img src="{{ book.getDisplayImage() }}" alt="{{ book.title }}"
+                                                style="width: 95%; height: 400px; object-fit: cover;">
+                                        </figure>
+                                        <figcaption>
+                                            <h3>{{ book.title }}</h3>
+                                            <span>
+                                                {% if book.author %}
+                                                    {{ book.author.name | default('Auteur inconnu') }}
+                                                {% else %}
+                                                    Auteur inconnu
+                                                {% endif %}
+                                            </span>
+                                        </figcaption>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p>Aucun livre disponible pour le moment.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -8,9 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
-/**A Author. */
+#[UniqueEntity('name', message: 'Un auteur avec ce nom existe déjà.')]
 #[ApiResource]
 class Author
 {
@@ -19,7 +20,7 @@ class Author
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Livres{% endblock %}
+
+{% block body %}
+<h1>Liste de tous les livres</h1>
+<div class="books-container">
+    {% for book in books %}
+        <div class="book-item">
+            <h3>{{ book.title }}</h3>
+            <p>Auteur: {{ book.author.name | default('Inconnu') }}</p>
+        </div>
+    {% else %}
+        <p>Aucun livre trouvé.</p>
+    {% endfor %}
+</div>
+{% endblock %}

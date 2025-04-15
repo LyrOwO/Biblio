@@ -24,7 +24,7 @@ class BibliController extends AbstractController
 
 
     #[Route('/', name: 'app_bibli')]
-    public function index(BookRepository $BookRepository, AuthorRepository $AuthorRepository): Response
+    public function index(BookRepository $BookRepository): Response
     
     {
         /*
@@ -115,5 +115,27 @@ class BibliController extends AbstractController
         return $this->render('bibli/index.html.twig', [
             'books' => $books,
         ]);
+    }
+
+    #[Route('/books', name: 'app_books')]
+    public function books(BookRepository $BookRepository): Response
+    {
+        $books = $BookRepository->findAll();
+
+        return $this->render('bibli/books.html.twig', [
+            'books' => $books,
+        ]);
+    }
+
+    #[Route('/shelves', name: 'app_shelves')]
+    public function shelves(): Response
+    {
+        return $this->render('bibli/shelves.html.twig');
+    }
+
+    #[Route('/prets', name: 'app_prets')]
+    public function prets(): Response
+    {
+        return $this->render('bibli/prets.html.twig');
     }
 }
