@@ -39,16 +39,15 @@ class AuthorCrudController extends AbstractCrudController
         ;
     }
 
-
-    
     public function configureFields(string $pageName): iterable
     {
-            yield AssociationField::new('books');
-            yield TextField::new('name');
-            yield TextField::new('nickname');
-            yield DateField::new('birthday');
-    
-    
+        // Debugging Author entity
+        $author = $this->getDoctrine()->getRepository(Author::class)->findAll();
+        dd($author);
+
+        yield AssociationField::new('books');
+        yield TextField::new('name');
+        yield TextField::new('nickname');
+        yield DateField::new('birthday');
     }
-    
 }

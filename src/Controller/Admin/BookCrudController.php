@@ -37,6 +37,10 @@ class BookCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        // Debugging Book entity
+        $book = $this->getDoctrine()->getRepository(Book::class)->findAll();
+        dd($book);
+
         yield AssociationField::new('author');
         yield TextField::new('title');
         yield TextField::new('IndustryIdentifiersIdentifier');
