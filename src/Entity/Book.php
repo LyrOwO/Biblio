@@ -56,7 +56,7 @@ class Book
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)] // Changez nullable à true
     private ?Author $author = null;
 
