@@ -67,7 +67,6 @@ class Book
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
-        $this->authors = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -208,29 +207,6 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection<int, Author>
-     */
-    public function getAuthors(): Collection
-    {
-        return $this->authors;
-    }
-
-    public function addAuthor(Author $author): static
-    {
-        if (!$this->authors->contains($author)) {
-            $this->authors->add($author);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(Author $author): static
-    {
-        $this->authors->removeElement($author);
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
