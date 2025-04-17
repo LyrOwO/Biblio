@@ -274,7 +274,7 @@ class Book
 
     public function setAuthor(?Author $author): static
     {
-        if ($author === null) {
+        /*if ($author === null) {
             // Récupérez l'auteur par défaut (ID = 1 au lieu de 0)
             $defaultAuthor = $this->entityManager->getRepository(Author::class)->find(1);
             if ($defaultAuthor === null) {
@@ -283,7 +283,7 @@ class Book
             $this->author = $defaultAuthor;
         } else {
             $this->author = $author;
-        }
+        }*/
 
         return $this;
     }
