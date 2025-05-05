@@ -36,7 +36,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_targer_path: app_home
+                default_targer_path: app_bibli
             logout:
                 path: app_logout
                 # where to redirect after logout
