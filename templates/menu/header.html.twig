@@ -21,6 +21,13 @@
 								<li class="menu-item"><a href="{{ path('app_books') }}">Livres</a></li>
 								<li class="menu-item"><a href="{{ path('app_shelves') }}">Étagères</a></li>
 								<li class="menu-item"><a href="{{ path('app_prets') }}">Prêts</a></li>
+								{% if app.user %}
+									<li class="menu-item">
+										<a href="{{ path('app_logout') }}" class="menu-item">
+											<i class="fas fa-sign-out-alt"></i> Logout
+										</a>
+									</li>
+								{% endif %}
 							</ul>
 
 							<div class="hamburger">
