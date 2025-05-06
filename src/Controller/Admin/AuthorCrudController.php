@@ -42,8 +42,8 @@ class AuthorCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         // Debugging Author entity
-        $author = $this->getDoctrine()->getRepository(Author::class)->findAll();
-        dd($author);
+        /*$author = $this->getDoctrine()->getRepository(Author::class)->findAll();
+        dd($author);*/
 
         yield AssociationField::new('books');
         yield TextField::new('name');
