@@ -1,0 +1,54 @@
+{% extends 'empty.html.twig' %}
+
+{% block title %}Sign Up!{% endblock %}
+
+{% block body %}
+    <form method="post" action="{{ path('app_register') }}">
+        <div class="overlay">
+        <!-- SIGN UP FORM -->
+        <div class="con">
+            <header class="head-form">
+                <h2>Sign Up</h2>
+                <p>Create your account by filling in the details below</p>
+            </header>
+            <br>
+            <div class="field-set">
+                <!-- Username -->
+                <span class="input-item">
+                    <i class="fa fa-user-circle"></i>
+                </span>
+                <input type="text" name="username" id="username" class="form-input" placeholder="@Username" required autofocus>
+                <br>
+
+                <!-- Email -->
+                <span class="input-item">
+                    <i class="fa fa-envelope"></i>
+                </span>
+                <input type="email" name="email" id="email" class="form-input" placeholder="@Email" required>
+                <br>
+
+                <!-- Password -->
+                <span class="input-item">
+                    <i class="fa fa-key"></i>
+                </span>
+                <input type="password" name="password" id="password" class="form-input" placeholder="@Password" required>
+                <br>
+
+                <!-- Confirm Password -->
+                <span class="input-item">
+                    <i class="fa fa-key"></i>
+                </span>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-input" placeholder="@Confirm Password" required>
+                <br>
+
+                <!-- CSRF Token -->
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <br>
+
+                <!-- Submit Button -->
+                <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
+            </div>
+        </div>
+        </div>
+    </form>
+{% endblock %}
