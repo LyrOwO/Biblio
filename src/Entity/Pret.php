@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Book;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: PretRepository::class)]
 #[ApiResource]
@@ -27,6 +28,10 @@ class Pret
 
     #[ORM\Column(length: 255)]
     private ?string $name_pret = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'prets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
 
     /**
      * @var Collection<int, BooksUser>
@@ -83,6 +88,18 @@ class Pret
     public function setNamePret(string $name_pret): static
     {
         $this->name_pret = $name_pret;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $user): static
+    {
+        $this->createdBy = $user;
 
         return $this;
     }

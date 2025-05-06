@@ -34,6 +34,11 @@
                     <td colspan="5">Aucun prêt trouvé.</td>
                 </tr>
             {% endfor %}
+            {% if prets is empty %}
+                <tr>
+                    <td colspan="5">Aucun prêt trouvé pour votre compte.</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 {% endblock %}

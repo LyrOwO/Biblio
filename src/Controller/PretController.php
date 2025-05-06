@@ -16,7 +16,8 @@ class PretController extends AbstractController
     #[Route('/prets', name: 'app_prets')]
     public function index(PretRepository $pretRepository): Response
     {
-        $prets = $pretRepository->findAll();
+        $user = $this->getUser();
+        $prets = $pretRepository->findBy(['createdBy' => $user]);
 
         return $this->render('prets/index.html.twig', [
             'prets' => $prets,
@@ -27,6 +28,7 @@ class PretController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $pret = new Pret();
+        $pret->setCreatedBy($this->getUser());
         $form = $this->createForm(PretType::class, $pret);
 
         $form->handleRequest($request);
