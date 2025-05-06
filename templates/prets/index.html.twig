@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Book</th>
-                <th>User</th>
-                <th>Due Date</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,9 +19,9 @@
             {% for pret in prets %}
                 <tr>
                     <td>{{ pret.id }}</td>
-                    <td>{{ pret.book.title }}</td>
-                    <td>{{ pret.user.username }}</td>
-                    <td>{{ pret.dueDate|date('Y-m-d') }}</td>
+                    <td>{{ pret.name_pret }}</td>
+                    <td>{{ pret.date_debut_pret|date('Y-m-d') }}</td>
+                    <td>{{ pret.date_fin_pret|date('Y-m-d') }}</td>
                     <td>
                         <form method="post" action="{{ path('app_prets_delete', { id: pret.id }) }}" onsubmit="return confirm('Are you sure you want to delete this loan?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pret.id) }}">
