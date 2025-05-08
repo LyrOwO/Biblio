@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EntityField;
 
 class BookCrudController extends AbstractCrudController
 {
@@ -48,7 +47,7 @@ class BookCrudController extends AbstractCrudController
         yield TextareaField::new('comment');
         yield TextField::new('ImageLinkMedium');
         yield TextField::new('ImageLinkThumbnail');
-        yield EntityField::new('addedBy')->setLabel('Added By')->hideOnForm(); // Add the addedBy field
+        yield AssociationField::new('addedBy')->setLabel('Added By')->hideOnForm(); // Use AssociationField instead of EntityField
     }
 
     public function createEntity(string $entityFqcn)
