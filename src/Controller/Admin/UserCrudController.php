@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -24,7 +25,12 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('username'),
             TextField::new('password')->hideOnIndex(),
-            ArrayField::new('roles'),
+            ChoiceField::new('roles')
+                ->setChoices([
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ])
+                ->allowMultipleChoices(true), // Allow multiple roles to be selected
             EmailField::new('email'),
             DateTimeField::new('birthday'),
         ];
