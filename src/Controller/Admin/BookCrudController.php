@@ -48,4 +48,12 @@ class BookCrudController extends AbstractCrudController
         yield TextField::new('ImageLinkMedium');
         yield TextField::new('ImageLinkThumbnail');
     }
+
+    public function createEntity(string $entityFqcn)
+    {
+        $book = new $entityFqcn();
+        $book->setAddedBy($this->getUser());
+
+        return $book;
+    }
 }

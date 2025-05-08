@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Pret;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[UniqueEntity('IndustryIdentifiersIdentifier')]
@@ -63,6 +64,10 @@ class Book
     #[ORM\ManyToOne(targetEntity: Pret::class, inversedBy: 'books', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)] // La relation est optionnelle
     private ?Pret $pret = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $addedBy = null;
 
     public function __construct()
     {
@@ -260,6 +265,18 @@ class Book
         } else {
             $this->author = $author;
         }*/
+
+        return $this;
+    }
+
+    public function getAddedBy(): ?User
+    {
+        return $this->addedBy;
+    }
+
+    public function setAddedBy(?User $user): static
+    {
+        $this->addedBy = $user;
 
         return $this;
     }
