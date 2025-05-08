@@ -12,8 +12,8 @@ class BookController extends AbstractController
     #[Route('/books', name: 'app_books')]
     public function index(BookRepository $bookRepository): Response
     {
-        $user = $this->getUser();
-        $books = $bookRepository->findBy(['addedBy' => $user]);
+        $user = $this->getUser(); // Get the currently logged-in user
+        $books = $bookRepository->findBooksByUser($user); // Fetch books added by the logged-in user
 
         return $this->render('books/index.html.twig', [
             'books' => $books,

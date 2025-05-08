@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="{{ asset('bibliotheme/assets/css/normalize.css') }}">
         <link rel="stylesheet" href="{{ asset('bibliotheme/assets/icomoon/icomoon.css') }}">
         <link rel="stylesheet" href="{{ asset('bibliotheme/assets/css/vendor.css') }}">
-        <link rel="stylesheet" href="{{ asset('bibliotheme/assets/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bibliotheme/assets/style.css') }}?v={{ app.request.server.get('APP_VERSION')|default('1') }}">
         
         {% block stylesheets %}
         {% endblock %}

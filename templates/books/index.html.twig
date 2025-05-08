@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tous les Livres{% endblock %}
+{% block title %}Mes Livres{% endblock %}
 
 {% block body %}
-<h1>Liste de tous les livres</h1>
+<h1>Liste de mes livres</h1>
 <div class="books-container">
     {% for book in books %}
         <div class="book-item">
@@ -11,7 +11,7 @@
             <p>Auteur: {{ book.author.name | default('Inconnu') }}</p>
         </div>
     {% else %}
-        <p>Aucun livre trouvé.</p>
+        <p>Vous n'avez ajouté aucun livre.</p>
     {% endfor %}
 </div>
 {% endblock %}

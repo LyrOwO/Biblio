@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EntityField;
 
 class BookCrudController extends AbstractCrudController
 {
@@ -38,8 +39,8 @@ class BookCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         // Debugging Book entity
-        $book = $this->getDoctrine()->getRepository(Book::class)->findAll();
-        dd($book);
+        // $book = $this->getDoctrine()->getRepository(Book::class)->findAll();
+        // dd($book);
 
         yield AssociationField::new('author');
         yield TextField::new('title');
@@ -47,6 +48,7 @@ class BookCrudController extends AbstractCrudController
         yield TextareaField::new('comment');
         yield TextField::new('ImageLinkMedium');
         yield TextField::new('ImageLinkThumbnail');
+        yield EntityField::new('addedBy')->setLabel('Added By')->hideOnForm(); // Add the addedBy field
     }
 
     public function createEntity(string $entityFqcn)
