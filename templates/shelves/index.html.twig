@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Etagères{% endblock %}
+{% block title %}Mes Étagères{% endblock %}
 
 {% block body %}
-    <h1>Liste des étagères</h1>
-    <ul>
-        {% for shelve in shelves %}
-            <li>{{ shelve.name }} - Créée le {{ shelve.dateCreation|date('d/m/Y') }}</li>
-        {% else %}
-            <li>Aucune étagère trouvée.</li>
-        {% endfor %}
-    </ul>
+<h1>Mes Étagères</h1>
+<a href="{{ path('app_shelves_new') }}" class="btn btn-primary mb-3">Créer une étagère</a>
+<ul>
+    {% for shelve in shelves %}
+        <li>
+            <a href="{{ path('app_shelves_view', { id: shelve.id }) }}">{{ shelve.name }}</a>
+            <form method="post" action="{{ path('app_shelves_delete', { id: shelve.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette étagère ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ shelve.id) }}">
+                <button class="btn btn-danger btn-sm">Supprimer</button>
+            </form>
+        </li>
+    {% else %}
+        <li>Aucune étagère trouvée.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ shelve.name }}{% endblock %}
+
+{% block body %}
+<h1>{{ shelve.name }}</h1>
+<ul>
+    {% for book in books %}
+        <li>{{ book.title }}</li>
+    {% else %}
+        <li>Aucun livre trouvé dans cette étagère.</li>
+    {% endfor %}
+</ul>
+<a href="{{ path('app_shelves') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+{% endblock %}

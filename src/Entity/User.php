@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Pret;
 use App\Entity\Book;
+use App\Entity\Shelve;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
@@ -63,11 +64,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'addedBy')]
     private Collection $books;
 
+    /**
+     * @var Collection<int, Shelve>
+     */
+    #[ORM\OneToMany(targetEntity: Shelve::class, mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private Collection $shelves;
+
     public function __construct()
     {
         $this->booksUsers = new ArrayCollection();
         $this->prets = new ArrayCollection();
         $this->books = new ArrayCollection();
+        $this->shelves = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,6 +261,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($book->getAddedBy() === $this) {
                 $book->setAddedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Shelve>
+     */
+    public function getShelves(): Collection
+    {
+        return $this->shelves;
+    }
+
+    public function addShelve(Shelve $shelve): static
+    {
+        if (!$this->shelves->contains($shelve)) {
+            $this->shelves->add($shelve);
+            $shelve->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShelve(Shelve $shelve): static
+    {
+        if ($this->shelves->removeElement($shelve)) {
+            // set the owning side to null (unless already changed)
+            if ($shelve->getOwner() === $this) {
+                $shelve->setOwner(null);
             }
         }
 
