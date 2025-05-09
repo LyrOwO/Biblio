@@ -14,9 +14,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $user = $this->getUser();
-        if ($user) {
-            return $this->redirectToRoute('app_bibli'); // Redirect to the main page
-        }
+        dd($user); // Debug the logged-in user
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

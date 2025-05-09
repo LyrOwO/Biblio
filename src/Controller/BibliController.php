@@ -24,11 +24,10 @@ class BibliController extends AbstractController
 
 
     #[Route('/', name: 'app_bibli')]
-    public function index(BookRepository $BookRepository): Response
-    
+    public function index(BookRepository $bookRepository): Response
     {
-        
-        $books = $BookRepository->findAll();
+        $user = $this->getUser(); // Get the currently logged-in user
+        $books = $bookRepository->findBy(['addedBy' => $user]); // Fetch books added by the logged-in user
 
         return $this->render('bibli/index.html.twig', [
             'books' => $books,
