@@ -48,11 +48,14 @@ class ShelveController extends AbstractController
     #[Route('/shelves/{id}', name: 'app_shelves_view')]
     public function view(Shelve $shelve): Response
     {
-        $this->denyAccessUnlessGranted('view', $shelve);
+        $user = $this->getUser();
+        if ($shelve->getOwner() !== $user) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette étagère.');
+        }
 
         return $this->render('shelves/view.html.twig', [
             'shelve' => $shelve,
-            'books' => $shelve->getBooksUser()->getBook(),
+            'books' => $shelve->getBooks(),
         ]);
     }
 
