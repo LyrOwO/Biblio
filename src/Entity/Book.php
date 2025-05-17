@@ -58,7 +58,7 @@ class Book
     private ?string $description = null;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
-    #[ORM\JoinColumn(nullable: true)] // Changez nullable à true
+    #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
     #[ORM\ManyToOne(targetEntity: Pret::class, inversedBy: 'books', cascade: ['persist', 'remove'])]
@@ -255,17 +255,7 @@ class Book
 
     public function setAuthor(?Author $author): static
     {
-        /*if ($author === null) {
-            // Récupérez l'auteur par défaut (ID = 1 au lieu de 0)
-            $defaultAuthor = $this->entityManager->getRepository(Author::class)->find(1);
-            if ($defaultAuthor === null) {
-                throw new \Exception('Auteur par défaut introuvable.');
-            }
-            $this->author = $defaultAuthor;
-        } else {
-            $this->author = $author;
-        }*/
-
+        $this->author = $author;
         return $this;
     }
 
