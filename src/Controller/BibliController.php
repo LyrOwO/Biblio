@@ -6,6 +6,8 @@ use App\Entity\Book;
 use App\Entity\Author;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
+use App\Repository\ShelveRepository;
+use App\Repository\PretRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +26,29 @@ class BibliController extends AbstractController
 
 
     #[Route('/', name: 'app_bibli')]
-    public function index(BookRepository $bookRepository): Response
+    public function index(
+        BookRepository $bookRepository,
+        ShelveRepository $shelveRepository,
+        PretRepository $pretRepository
+    ): Response
     {
-        $user = $this->getUser(); // Get the currently logged-in user
-        $books = $bookRepository->findBy(['addedBy' => $user]); // Fetch books added by the logged-in user
+        $user = $this->getUser();
+
+        // Livres de l'utilisateur (4 aléatoires)
+        $books = $bookRepository->findBy(['addedBy' => $user]);
+        shuffle($books);
+        $books = array_slice($books, 0, 4);
+
+        // 2 étagères de l'utilisateur
+        $shelves = $shelveRepository->findBy(['owner' => $user], null, 2);
+
+        // 2 prêts de l'utilisateur
+        $prets = $pretRepository->findBy(['createdBy' => $user], null, 2);
 
         return $this->render('bibli/index.html.twig', [
             'books' => $books,
+            'shelves' => $shelves,
+            'prets' => $prets,
         ]);
     }
 

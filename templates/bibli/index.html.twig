@@ -1,46 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Livres{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <section id="featured-books" class="py-5 my-5">
+    <section id="mes-livres" class="py-5">
         <div class="container">
+            <h2>Mes Livres</h2>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="section-header align-center">
-                        <div class="title">
-                            <span>Some quality items</span>
+                {% for book in books %}
+                    <div class="col-md-3">
+                        <div class="product-item">
+                            <figure class="product-style">
+                                <img src="{{ book.getDisplayImage() }}" alt="{{ book.title }}"
+                                    style="width: 95%; height: 200px; object-fit: cover;">
+                            </figure>
+                            <figcaption>
+                                <h3>{{ book.title }}</h3>
+                                <span>
+                                    {% if book.author is not empty %}
+                                        {{ book.author.name | default('Auteur inconnu') }}
+                                    {% else %}
+                                        Auteur inconnu
+                                    {% endif %}
+                                </span>
+                            </figcaption>
                         </div>
-                        <h2 class="section-title">Mes Livres</h2>
                     </div>
+                {% else %}
+                    <p>Aucun livre disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+            <div class="mt-2">
+                <a href="{{ path('app_books') }}" class="btn btn-primary">Voir tous mes livres</a>
+            </div>
+        </div>
+    </section>
 
-                    <div class="product-list">
-                        <div class="row">
-                            {% for book in books %}
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="{{ book.getDisplayImage() }}" alt="{{ book.title }}"
-                                                style="width: 95%; height: 400px; object-fit: cover;">
-                                        </figure>
-                                        <figcaption>
-                                            <h3>{{ book.title }}</h3>
-                                            <span>
-                                                {% if book.author is not empty %}
-                                                    {{ book.author.name | default('Auteur inconnu') }}
-                                                {% else %}
-                                                    Auteur inconnu
-                                                {% endif %}
-                                            </span>
-                                        </figcaption>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <p>Aucun livre disponible pour le moment.</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+    <section id="mes-etageres" class="py-5">
+        <div class="container">
+            <h2>Mes étagères</h2>
+            <ul>
+                {% for shelve in shelves %}
+                    <li>
+                        <a href="{{ path('app_shelves_view', { id: shelve.id }) }}">{{ shelve.name }}</a>
+                    </li>
+                {% else %}
+                    <li>Aucune étagère trouvée.</li>
+                {% endfor %}
+            </ul>
+            <div class="mt-2">
+                <a href="{{ path('app_shelves') }}" class="btn btn-primary">Voir toutes mes étagères</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="mes-prets" class="py-5">
+        <div class="container">
+            <h2>Mes prêts</h2>
+            <ul>
+                {% for pret in prets %}
+                    <li>
+                        {{ pret.namePret }} (du {{ pret.dateDebutPret|date('d/m/Y') }}{% if pret.dateFinPret %} au {{ pret.dateFinPret|date('d/m/Y') }}{% endif %})
+                    </li>
+                {% else %}
+                    <li>Aucun prêt trouvé.</li>
+                {% endfor %}
+            </ul>
+            <div class="mt-2">
+                <a href="{{ path('app_prets') }}" class="btn btn-primary">Voir tous mes prêts</a>
             </div>
         </div>
     </section>
