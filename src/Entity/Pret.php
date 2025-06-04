@@ -10,9 +10,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Book;
 use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PretRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['pret:read']],
+    denormalizationContext: ['groups' => ['pret:write']]
+)]
 class Pret
 {
     #[ORM\Id]
@@ -21,33 +25,31 @@ class Pret
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['pret:read', 'pret:write'])]
     private ?\DateTimeInterface $date_debut_pret = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['pret:read', 'pret:write'])]
     private ?\DateTimeInterface $date_fin_pret = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['pret:read', 'pret:write'])]
     private ?string $name_pret = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'prets')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['pret:read', 'pret:write'])]
     private ?User $createdBy = null;
-
-    /**
-     * @var Collection<int, BooksUser>
-     */
-    #[ORM\OneToMany(targetEntity: BooksUser::class, mappedBy: 'pret')]
-    private Collection $booksUsers;
 
     /**
      * @var Collection<int, Book>
      */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'pret')]
+    #[Groups(['pret:read', 'pret:write'])]
     private Collection $books;
 
     public function __construct()
     {
-        $this->booksUsers = new ArrayCollection();
         $this->books = new ArrayCollection();
     }
 
@@ -100,36 +102,6 @@ class Pret
     public function setCreatedBy(?User $user): static
     {
         $this->createdBy = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, BooksUser>
-     */
-    public function getBooksUsers(): Collection
-    {
-        return $this->booksUsers;
-    }
-
-    public function addBooksUser(BooksUser $booksUser): static
-    {
-        if (!$this->booksUsers->contains($booksUser)) {
-            $this->booksUsers->add($booksUser);
-            $booksUser->setPret($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBooksUser(BooksUser $booksUser): static
-    {
-        if ($this->booksUsers->removeElement($booksUser)) {
-            // set the owning side to null (unless already changed)
-            if ($booksUser->getPret() === $this) {
-                $booksUser->setPret(null);
-            }
-        }
 
         return $this;
     }

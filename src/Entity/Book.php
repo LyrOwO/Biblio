@@ -12,10 +12,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Pret;
 use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[UniqueEntity('IndustryIdentifiersIdentifier')]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['book:read', 'pret:read']],
+    denormalizationContext: ['groups' => ['book:write']]
+)]
 class Book
 {
     #[ORM\Id]
@@ -24,6 +28,7 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['book:read', 'pret:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -36,9 +41,11 @@ class Book
     private Collection $booksUsers;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['book:read', 'pret:read'])]
     private ?string $ImageLinkMedium = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['book:read', 'pret:read'])]
     private ?string $ImageLinkThumbnail = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -55,14 +62,16 @@ class Book
      */
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['book:read', 'pret:read'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['book:read', 'pret:read'])]
     private ?Author $author = null;
 
     #[ORM\ManyToOne(targetEntity: Pret::class, inversedBy: 'books', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)] // La relation est optionnelle
+    #[ORM\JoinColumn(nullable: true)]
     private ?Pret $pret = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'books')]
@@ -269,5 +278,11 @@ class Book
         $this->addedBy = $user;
 
         return $this;
+    }
+
+    #[Groups(['pret:read'])]
+    public function getAuthorName(): ?string
+    {
+        return $this->author ? $this->author->getName() : null;
     }
 }
