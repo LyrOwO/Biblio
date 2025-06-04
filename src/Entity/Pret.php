@@ -10,13 +10,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Book;
 use App\Entity\User;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PretRepository::class)]
-#[ApiResource(
-    normalizationContext: ['groups' => ['pret:read']],
-    denormalizationContext: ['groups' => ['pret:write']]
-)]
+#[ApiResource]
 class Pret
 {
     #[ORM\Id]
@@ -25,15 +21,12 @@ class Pret
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['pret:read', 'pret:write'])]
     private ?\DateTimeInterface $date_debut_pret = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['pret:read', 'pret:write'])]
     private ?\DateTimeInterface $date_fin_pret = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['pret:read', 'pret:write'])]
     private ?string $name_pret = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'prets')]
@@ -50,7 +43,6 @@ class Pret
      * @var Collection<int, Book>
      */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'pret')]
-    #[Groups(['pret:read'])]
     private Collection $books;
 
     public function __construct()
@@ -145,7 +137,6 @@ class Pret
     /**
      * @return Collection<int, Book>
      */
-    #[Groups(['pret:read'])]
     public function getBooks(): Collection
     {
         return $this->books;
