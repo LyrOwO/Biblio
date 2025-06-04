@@ -22,6 +22,7 @@ class Pret
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['pret:read'])] // Ajout du groupe pour exposer l'id dans l'API
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
