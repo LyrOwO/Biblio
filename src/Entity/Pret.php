@@ -46,7 +46,7 @@ class Pret
      * @var Collection<int, Book>
      */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'pret')]
-    #[Groups(['pret:read', 'pret:write'])]
+    #[Groups(['pret:read'])] // Ajouté pour exposer le champ books dans l'API
     private Collection $books;
 
     public function __construct()
